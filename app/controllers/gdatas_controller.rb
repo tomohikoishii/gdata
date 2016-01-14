@@ -1,0 +1,2 @@
+class GdatasController < ApplicationController
+end
