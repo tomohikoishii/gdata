@@ -31,7 +31,7 @@ class GdatasController < ApplicationController
     session[:access_token] = response['access_token']
     session[:refresh_token] = response['refresh_token']
     
-    redirect_to url_for(:action => :analytics)
+    # redirect_to url_for(:action => :analytics)
   end
   
   def analytics
@@ -44,19 +44,23 @@ class GdatasController < ApplicationController
 
     @account_summaries = service.list_account_summaries
   
-    # @client = Signet::OAuth2::Client.new(access_token: session[:access_token],refresh_token: session[:refresh_token])
-
-    #api = Google::Apis::AnalyticsV3::AnalyticsService.new
-    #api.authorization.update_token!({"access_token"=> session[:access_token], "token_type"=>"Bearer", "expires_in"=>3600, "refresh_token"=>session[:refresh_token]})
-    
-    #@service = api.discovered_api('analytics', 'v3')
-    
-    # service.oauth_token = client.access_token
-    
-    # @account_summaries = service.list_account_summaries
   end
   
   def searchconsole
+    require 'google/apis/webmasters_v3'
+    
+    @client = Signet::OAuth2::Client.new(access_token: session[:access_token],refresh_token: session[:refresh_token])
+
+    @client2 = @client
+    
+    service = Google::Apis::WebmastersV3::WebmastersService.new
+
+    service.authorization = @client
+
+    @client.update!
+
+    @data = service.list_sites
+
   end
 
 end
