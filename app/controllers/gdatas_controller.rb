@@ -42,8 +42,18 @@ class GdatasController < ApplicationController
 
     service.authorization = client
 
-    account_summaries = service.list_account_summaries
+    @account_summaries = service.list_account_summaries
   
+    # @client = Signet::OAuth2::Client.new(access_token: session[:access_token],refresh_token: session[:refresh_token])
+
+    #api = Google::Apis::AnalyticsV3::AnalyticsService.new
+    #api.authorization.update_token!({"access_token"=> session[:access_token], "token_type"=>"Bearer", "expires_in"=>3600, "refresh_token"=>session[:refresh_token]})
+    
+    #@service = api.discovered_api('analytics', 'v3')
+    
+    # service.oauth_token = client.access_token
+    
+    # @account_summaries = service.list_account_summaries
   end
   
   def searchconsole
